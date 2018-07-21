@@ -49,6 +49,7 @@ namespace Microsoft.Office.WopiValidator.Core.Requests
 		public IEnumerable<IValidator> Validators { get; protected set; }
 
 		public IEnumerable<IStateEntry> State { get; protected set; }
+		public RequestClassification Classification { get; protected set; }
 
 		/// <summary>
 		/// Executes request and gathers response data.

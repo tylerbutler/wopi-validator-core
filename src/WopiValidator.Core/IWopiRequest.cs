@@ -6,6 +6,14 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Office.WopiValidator.Core
 {
+	public enum RequestClassification
+	{
+		Unspecified = 0,
+		Standard = 1,
+		Cleanup = 2,
+		Prerequisite = 3,
+	}
+
 	public interface IRequest
 	{
 		string Name { get;  }
@@ -16,6 +24,7 @@ namespace Microsoft.Office.WopiValidator.Core
 		ProofKeyOutput OldProofData { get; set; }
 		IEnumerable<IValidator> Validators { get; }
 		IEnumerable<IStateEntry> State { get; }
+		RequestClassification Classification { get; }
 
 		IResponseData Execute(string endpointAddress,
 			string accessToken,

@@ -56,6 +56,7 @@ namespace Microsoft.Office.WopiValidator.Core.Requests
 			Validators = (param.Validators ?? Enumerable.Empty<IValidator>()).ToArray();
 			State = (param.StateSavers ?? Enumerable.Empty<IStateEntry>()).ToArray();
 			Mutators = (param.Mutators ?? Enumerable.Empty<IMutator>()).ToArray();
+			Classification = param.RequestClassification;
 		}
 
 		/// <summary>
@@ -71,6 +72,19 @@ namespace Microsoft.Office.WopiValidator.Core.Requests
 			RSACryptoServiceProvider proofKeyProviderNew,
 			RSACryptoServiceProvider proofKeyProviderOld)
 		{
+			string logMessage;
+			switch (Classification)
+			{
+				case RequestClassification.Cleanup:
+					logMessage = $"REQUEST: {Name} ({Classification})";
+					break;
+				default:
+					logMessage = $"REQUEST: {Name}";
+					break;
+			}
+
+			logger.LogTrace(logMessage);
+
 			// Get the url of the WOPI endpoint that we'll call - either the normal endpoint, or a SavedState override.
 			// If it's an override it might change the accessToken that we're using because it probably already has a token on it.
 			Uri uri = GetRequestUri(endpointAddress, ref accessToken, accessTokenTtl, savedState);

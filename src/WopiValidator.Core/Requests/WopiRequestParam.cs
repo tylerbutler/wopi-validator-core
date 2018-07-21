@@ -26,6 +26,7 @@ namespace Microsoft.Office.WopiValidator.Core.Requests
 		public IEnumerable<IValidator> Validators { get; set; }
 		public string WopiSrc { get; set; }
 		public string UrlType { get; set; }
+		internal RequestClassification RequestClassification { get; set; }
 	}
 
 	public enum PutRelativeFileMode

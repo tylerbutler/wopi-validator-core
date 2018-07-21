@@ -15,15 +15,15 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 		/// <summary>
 		/// Parses requests information from XML into a collection of IWopiRequest
 		/// </summary>
-		public static IEnumerable<IRequest> GetRequests(XElement definition)
+		public static IEnumerable<IRequest> GetRequests(XElement definition, RequestClassification classification)
 		{
-			return definition.Elements().Select(GetRequest);
+			return definition.Elements().Select(x => GetRequest(x, classification));
 		}
 
 		/// <summary>
 		/// Parses single request definition and instantiates proper IWopiRequest instance based on element name
 		/// </summary>
-		private static IRequest GetRequest(XElement definition)
+		private static IRequest GetRequest(XElement definition, RequestClassification classification)
 		{
 			string elementName = definition.Name.LocalName;
 			XElement validatorsDefinition = definition.Element("Validators");
@@ -51,6 +51,7 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 				UrlType = (string)definition.Attribute("UrlType"),
 				Validators = validators ?? GetDefaultValidators(),
 				WopiSrc = (string)definition.Attribute("WopiSrc"),
+				RequestClassification = classification,
 			};
 
 			if (requestBodyDefinition != null && !String.IsNullOrEmpty(requestBodyDefinition.Value))

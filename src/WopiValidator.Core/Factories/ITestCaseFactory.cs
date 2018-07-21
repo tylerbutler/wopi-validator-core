@@ -16,7 +16,8 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 		/// <returns>Collection of Test Cases.</returns>
 		IEnumerable<ITestCase> GetTestCases(
 			XElement definitions,
-			TestCategory targetTestCategory);
+			TestCategory targetTestCategory,
+			TestCaseType testCaseType = TestCaseType.Unspecified);
 
 		/// <summary>
 		/// Parse XML run configuration testgroup element to get a list of TestCases.
@@ -30,6 +31,7 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 			Dictionary<string, ITestCase> prereqCasesDictionary,
 			out IEnumerable<ITestCase> prereqTests,
 			out IEnumerable<ITestCase> groupTests,
-			TestCategory targetTestCategory);
+			TestCategory targetTestCategory,
+			TestCaseType testCaseType = TestCaseType.Unspecified);
 	}
 }

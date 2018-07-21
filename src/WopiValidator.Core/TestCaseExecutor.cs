@@ -78,6 +78,15 @@ namespace Microsoft.Office.WopiValidator.Core
 
 			try
 			{
+				if (testCase.TestCaseType == TestCaseType.Prerequisite)
+				{
+					logger.LogTrace($"TEST CASE: {testCase.Name} ({testCase.TestCaseType})");
+				}
+				else
+				{
+					logger.LogTrace($"TEST CASE: {testCase.Name}");
+				}
+
 				foreach (IRequest request in testCase.Requests)
 				{
 					IResponseData responseData;

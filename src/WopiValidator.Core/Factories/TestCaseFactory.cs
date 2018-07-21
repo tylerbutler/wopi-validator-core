@@ -12,9 +12,9 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 {
 	public class TestCaseFactory : ITestCaseFactory
 	{
-		public IEnumerable<ITestCase> GetTestCases(XElement definitions, TestCategory targetTestCategory)
+		public IEnumerable<ITestCase> GetTestCases(XElement definitions, TestCategory targetTestCategory, TestCaseType testCaseType = TestCaseType.Unspecified)
 		{
-			return definitions.Elements("TestCase").Where(x => DoesTestCategoryMatchTargetTestCategory(x, targetTestCategory)).Select(x => GetTestCase(x));
+			return definitions.Elements("TestCase").Where(x => DoesTestCategoryMatchTargetTestCategory(x, targetTestCategory)).Select(x => GetTestCase(x, testCaseType));
 		}
 
 		public void GetTestCases(
@@ -22,13 +22,14 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 			Dictionary<string, ITestCase> prereqCasesDictionary,
 			out IEnumerable<ITestCase> prereqTests,
 			out IEnumerable<ITestCase> groupTests,
-			TestCategory targetTestCategory)
+			TestCategory targetTestCategory,
+			TestCaseType testCaseType = TestCaseType.Unspecified)
 		{
 			XElement prereqsElement = definition.Element("PrereqTests") ?? new XElement("PrereqTests");
 			prereqTests = GetPrereqTests(prereqsElement, prereqCasesDictionary);
 
 			XElement testCasesElement = definition.Element("TestCases") ?? new XElement("TestCases");
-			groupTests = GetTestCases(testCasesElement, targetTestCategory);
+			groupTests = GetTestCases(testCasesElement, targetTestCategory, testCaseType);
 		}
 
 		private static IEnumerable<ITestCase> GetPrereqTests(XElement definition, Dictionary<string, ITestCase> prereqsDictionary)
@@ -49,7 +50,7 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 		///
 		/// User RequestFactory.GetRequests to parse requests defined in that Test Case.
 		/// </summary>
-		private static ITestCase GetTestCase(XElement definition)
+		private static ITestCase GetTestCase(XElement definition, TestCaseType testCaseType = TestCaseType.Unspecified)
 		{
 			string category = (string)definition.Attribute("Category");
 			string name = (string)definition.Attribute("Name");
@@ -63,25 +64,37 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 			bool deleteDocumentOnTeardown = (bool?)definition.Attribute("DeleteDocumentOnTeardown") ?? true;
 
 			XElement requestsDefinition = definition.Element("Requests");
-			IEnumerable<IRequest> requests = RequestFactory.GetRequests(requestsDefinition);
+			IEnumerable<IRequest> requests;
+			switch (testCaseType)
+			{
+				case TestCaseType.Prerequisite:
+					requests = RequestFactory.GetRequests(requestsDefinition, RequestClassification.Prerequisite);
+					break;
+				default:
+					requests = RequestFactory.GetRequests(requestsDefinition, RequestClassification.Standard);
+					break;
+			}
 
 			IEnumerable<IRequest> cleanupRequests = null;
 			XElement cleanupRequestsDefinition = definition.Element("CleanupRequests");
 			if (cleanupRequestsDefinition != null)
-				cleanupRequests = RequestFactory.GetRequests(cleanupRequestsDefinition);
+				cleanupRequests = RequestFactory.GetRequests(cleanupRequestsDefinition, RequestClassification.Cleanup);
 
-			ITestCase testCase = new TestCase(resourceId,
+			ITestCase testCase = new TestCase(
+				resourceId,
 				requests,
 				cleanupRequests,
 				name,
 				CondenseMultiLineString(description),
 				uploadDocumentOnSetup,
 				deleteDocumentOnTeardown,
-				category);
-
-			testCase.UiScreenShot = uiScreenshot;
-			testCase.DocumentationLink = documentationLink;
-			testCase.FailMessage = failMessage;
+				category,
+				testCaseType)
+			{
+				UiScreenShot = uiScreenshot,
+				DocumentationLink = documentationLink,
+				FailMessage = failMessage
+			};
 
 			return testCase;
 		}

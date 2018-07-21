@@ -20,7 +20,8 @@ namespace Microsoft.Office.WopiValidator.Core
 			string description,
 			bool uploadDocumentOnSetup,
 			bool deleteDocumentOnTearDown,
-			string category)
+			string category,
+			TestCaseType testCaseType = TestCaseType.Unspecified)
 		{
 			DeleteDocumentOnTearDown = deleteDocumentOnTearDown;
 			UploadDocumentOnSetup = uploadDocumentOnSetup;
@@ -48,6 +49,7 @@ namespace Microsoft.Office.WopiValidator.Core
 			DocumentationLink = String.Empty;
 			FailMessage = String.Empty;
 			Category = category;
+			TestCaseType = testCaseType;
 		}
 
 		public IEnumerable<IRequest> Requests { get; private set; }
@@ -61,5 +63,6 @@ namespace Microsoft.Office.WopiValidator.Core
 		public bool UploadDocumentOnSetup { get; private set; }
 		public bool DeleteDocumentOnTearDown { get; private set; }
 		public string Category { get; private set; }
+		public TestCaseType TestCaseType { get; private set; }
 	}
 }

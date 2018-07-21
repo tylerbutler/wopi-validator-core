@@ -31,7 +31,8 @@ namespace Microsoft.Office.WopiValidator.Core
 			IResourceManager resourceManager = resourceManagerFactory.GetResourceManager(resourcesElement);
 
 			XElement prereqCasesElement = xDoc.Root.Element("PrereqCases") ?? new XElement("PrereqCases");
-			IEnumerable<ITestCase> prereqCases = testCaseFactory.GetTestCases(prereqCasesElement, targetTestCategory);
+			IEnumerable<ITestCase> prereqCases = testCaseFactory.GetTestCases(prereqCasesElement, targetTestCategory, TestCaseType.Prerequisite);
+
 			Dictionary<string, ITestCase> prereqCasesDictionary = prereqCases.ToDictionary(e => e.Name);
 
 			return xDoc.Root.Elements("TestGroup")
