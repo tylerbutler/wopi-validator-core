@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Microsoft.Office.WopiValidator.Core
@@ -146,6 +147,54 @@ namespace Microsoft.Office.WopiValidator.Core
 				return output;
 			}
 		}
+
+		/// <summary>
+		/// Creates an RSACryptoServiceProvider from an X509 certificate.
+		/// </summary>
+		/// <param name="pathToCert">The path to the cert file.</param>
+		/// <returns>An RSACryptoServiceProvider based on the cert.</returns>
+		public static RSACryptoServiceProvider GetRSACryptoServiceProvider(string pathToCert)
+		{
+			var cert = new X509Certificate2(pathToCert);
+			var parameters = GetCspParamsFromCertificate(cert);
+			return new RSACryptoServiceProvider(parameters);
+		}
+
+		private static CspParameters GetCspParamsFromCertificate(X509Certificate2 cert)
+		{
+			if (cert == null)
+			{
+				return null;
+			}
+
+			RSACryptoServiceProvider privateKey = cert.PrivateKey as RSACryptoServiceProvider;
+			if (privateKey == null)
+			{
+				return null;
+			}
+
+			CspKeyContainerInfo cspKeyContainerInfo = privateKey.CspKeyContainerInfo;
+
+			// Create a CspParameters object with the following properties:
+			//   KeyContainerName matching the cert's csp:  Use the private key from the cert
+			//       (The key for all ProviderTypes is stored in a shared physical location)
+			//   KeyNumber matching the cert's csp:  The value of the -sky param for makecert.exe (Exchange or Signature)
+			//   UseMachineKeyStore according to the cert's csp:  LOCAL_MACHINE cert store, if specified
+			CspParameters csp = new CspParameters
+			{
+				ProviderType = 24, // PROV_RSA_AES
+				KeyContainerName = cspKeyContainerInfo.KeyContainerName,
+				KeyNumber = (int)cspKeyContainerInfo.KeyNumber
+			};
+
+			if (cspKeyContainerInfo.MachineKeyStore)
+			{
+				csp.Flags = CspProviderFlags.UseMachineKeyStore;
+			}
+
+			return csp;
+		}
+
 
 		private static byte[] EncodeNumber(int value)
 		{
