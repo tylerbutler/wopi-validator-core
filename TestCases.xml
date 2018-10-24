@@ -447,6 +447,38 @@
     </TestCases>
   </TestGroup>
 
+  <TestGroup Name="Discovery">
+    <PrereqTests>
+      <PrereqTest>WopiValidatorPrereq</PrereqTest>
+    </PrereqTests>
+    <TestCases>
+      <TestCase Name="DiscoveryPlaceholderHandling" Document="WordBlankDocument" Category="OfficeOnline">
+        <Description>
+          This tests that hosts are handling WOPI discovery correctly by checking for the presence of placeholder values in action URLs.
+        </Description>
+        <Requests>
+          <CheckFileInfo>
+            <Validators>
+              <JsonResponseContentValidator>
+                <StringRegexProperty Name="CloseUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="DownloadUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="FileSharingUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="FileUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="FileVersionUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="HostEditUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="HostEmbeddedViewUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="HostViewUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="SignInUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="SignoutUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="WorkflowUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+              </JsonResponseContentValidator>
+            </Validators>
+          </CheckFileInfo>
+        </Requests>
+      </TestCase>
+    </TestCases>
+  </TestGroup>
+
   <TestGroup Name="Locks">
     <PrereqTests>
       <PrereqTest>WopiValidatorPrereq</PrereqTest>
