@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
+    <RootNamespace>Microsoft.Office.WopiValidator.Tools</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,10 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.2.1" />
   </ItemGroup>
 
 </Project>
