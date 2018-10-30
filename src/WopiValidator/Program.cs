@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -31,10 +31,10 @@ namespace Microsoft.Office.WopiValidator
 
 			string userAgent = (inputTestCategory == TestCategory.OfficeNativeClient || testCategory == TestCategory.OfficeNativeClient) ? Constants.HeaderValues.OfficeNativeClientUserAgent : null;
 
-			var proofKeyProviderNew = ProofKeysHelper.GetRSACryptoServiceProvider("ProofKeysNew.cer");
-			var proofKeyProviderOld = ProofKeysHelper.GetRSACryptoServiceProvider("ProofKeysOld.cer");
+			var proofKeyProviderCurrent = ProofKeysHelper.DefaultCurrentKeyProvider();
+			var proofKeyProviderOld = ProofKeysHelper.DefaultOldKeyProvider();
 
-			return new TestCaseExecutor(testExecutionData, options.WopiEndpoint, options.AccessToken, options.AccessTokenTtl, userAgent, proofKeyProviderNew, proofKeyProviderOld);
+			return new TestCaseExecutor(testExecutionData, options.WopiEndpoint, options.AccessToken, options.AccessTokenTtl, userAgent, proofKeyProviderCurrent, proofKeyProviderOld);
 		}
 
 		private static int Main(string[] args)

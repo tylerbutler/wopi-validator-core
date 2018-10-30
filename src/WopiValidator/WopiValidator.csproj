@@ -49,26 +49,17 @@
     <Content Include="..\..\TestCases.xsd" Link="TestCases.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\ProofKeysNew.cer" Link="ProofKeysNew.cer">
+    <Content Include="..\..\ProofKeysNew.cer" Link="ProofKeysNew.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\ProofKeysOld.cer" Link="ProofKeysOld.cer">
+    </Content>
+    <Content Include="..\..\ProofKeysOld.cer" Link="ProofKeysOld.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WopiValidator.Core\WopiValidator.Core.csproj" PrivateAssets="all" />
     <!-- <ProjectReference Include="..\ClassLibrary3\ClassLibrary3.csproj" Condition="'$(TargetFramework)' == 'net47'" PrivateAssets="all" /> -->
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="WopiValidator.cer">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <!-- This is a workaround to include files from the WopiValidator.Core project in the Nuget package for this

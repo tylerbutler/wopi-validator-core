@@ -160,6 +160,16 @@ namespace Microsoft.Office.WopiValidator.Core
 			return new RSACryptoServiceProvider(parameters);
 		}
 
+		public static RSACryptoServiceProvider DefaultCurrentKeyProvider()
+		{
+			return GetRSACryptoServiceProvider("ProofKeysNew.cer");
+		}
+
+		public static RSACryptoServiceProvider DefaultOldKeyProvider()
+		{
+			return GetRSACryptoServiceProvider("ProofKeysOld.cer");
+		}
+
 		private static CspParameters GetCspParamsFromCertificate(X509Certificate2 cert)
 		{
 			if (cert == null)
@@ -175,11 +185,6 @@ namespace Microsoft.Office.WopiValidator.Core
 
 			CspKeyContainerInfo cspKeyContainerInfo = privateKey.CspKeyContainerInfo;
 
-			// Create a CspParameters object with the following properties:
-			//   KeyContainerName matching the cert's csp:  Use the private key from the cert
-			//       (The key for all ProviderTypes is stored in a shared physical location)
-			//   KeyNumber matching the cert's csp:  The value of the -sky param for makecert.exe (Exchange or Signature)
-			//   UseMachineKeyStore according to the cert's csp:  LOCAL_MACHINE cert store, if specified
 			CspParameters csp = new CspParameters
 			{
 				ProviderType = 24, // PROV_RSA_AES
@@ -194,7 +199,6 @@ namespace Microsoft.Office.WopiValidator.Core
 
 			return csp;
 		}
-
 
 		private static byte[] EncodeNumber(int value)
 		{
