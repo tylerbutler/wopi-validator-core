@@ -19,6 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B8E53A0B-E
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 		FeatureTestCases.xml = FeatureTestCases.xml
+		TestCases.xml = TestCases.xml
+		TestCases.xsd = TestCases.xsd
+		LocalDiscovery.xml = LocalDiscovery.xml
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection

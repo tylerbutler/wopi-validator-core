@@ -8,5 +8,7 @@ namespace Microsoft.Office.WopiValidator.Tools
 	[Verb("proofkeys", HelpText = "Outputs the Proof Key XML for the default current and old key.")]
 	internal class ProofKeyExportOptions
 	{
+		[Value(0)]
+		public string OutputFileName { get; set; }
 	}
 }

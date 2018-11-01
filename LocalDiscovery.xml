@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wopi-discovery>
+  <net-zone name="external-https">
+  </net-zone>
+  <proof-key
+    value="BgIAAACkAABSU0ExAAQAAAEAAQBBuu8MAdiDsgrdOlqcs6hx57omHAP1aVqbY4IzbK74B/jbzwyhXtL11MdPL8FwpdoeKHgA2iFI3Aju0nl+bK+iKTkVgqm3pgY5bUgHNJahFpiggAKJHkbz4Nk1c9EGHF1miHD++Bq309Pbx+z8/hOV2d9KzR+ufea1EvW2r/895Q=="
+    modulus="5T3/r7b1ErXmfa4fzUrf2ZUT/vzsx9vT07ca+P5wiGZdHAbRczXZ4PNGHokCgKCYFqGWNAdIbTkGprepghU5KaKvbH550u4I3Egh2gB4KB7apXDBL0/H1PXSXqEMz9v4B/iubDOCY5taafUDHCa653Gos5xaOt0KsoPYAQzvukE="
+    exponent="AQAB"
+    oldvalue="BgIAAACkAABSU0ExAAQAAAEAAQAxqkEnFoUiRpBI5DbWW+rDRtuEwSh4pEmGO+JEK/gWOyUKLpy8T9xGV6C2eUjLa4FeQ+FP9enRsp1am66zB3W4s12yVvpMvWkoJpU0vbcqzJKmbZZ2KUdiQEqtJmMysHgjo7Pz8V2jmKhJSCyfDC3nrhZS4J8EHmkfy3bGIdYKpg=="
+    oldmodulus="pgrWIcZ2yx9pHgSf4FIWructDJ8sSEmomKNd8fOzoyN4sDJjJq1KQGJHKXaWbaaSzCq3vTSVJihpvUz6VrJds7h1B7Oum1qdstHp9U/hQ16Ba8tIebagV0bcT7ycLgolOxb4K0TiO4ZJpHgowYTbRsPqW9Y25EiQRiKFFidBqjE="
+    oldexponent="AQAB" />
+</wopi-discovery>
