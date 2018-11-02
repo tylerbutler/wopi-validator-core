@@ -83,7 +83,7 @@ namespace Microsoft.Office.WopiValidator.Core.Requests
 					break;
 			}
 
-			logger.LogTrace(logMessage);
+			// TODO: log the message
 
 			// Get the url of the WOPI endpoint that we'll call - either the normal endpoint, or a SavedState override.
 			// If it's an override it might change the accessToken that we're using because it probably already has a token on it.

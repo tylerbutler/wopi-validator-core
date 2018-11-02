@@ -3,7 +3,7 @@
 
 namespace Microsoft.Office.WopiValidator.Core.Logging
 {
-	interface ILogger
+	public interface ILogger
 	{
 		void Log(string message);
 

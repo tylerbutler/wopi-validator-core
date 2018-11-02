@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Microsoft.Office.WopiValidator.Core.Validators;
@@ -80,11 +80,11 @@ namespace Microsoft.Office.WopiValidator.Core
 			{
 				if (testCase.TestCaseType == TestCaseType.Prerequisite)
 				{
-					logger.LogTrace($"TEST CASE: {testCase.Name} ({testCase.TestCaseType})");
+					// logger.LogTrace($"TEST CASE: {testCase.Name} ({testCase.TestCaseType})");
 				}
 				else
 				{
-					logger.LogTrace($"TEST CASE: {testCase.Name}");
+					// logger.LogTrace($"TEST CASE: {testCase.Name}");
 				}
 
 				foreach (IRequest request in testCase.Requests)
