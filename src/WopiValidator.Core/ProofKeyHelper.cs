@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -81,7 +82,8 @@ namespace Microsoft.Office.WopiValidator.Core
 	{
 		private static ProofKeyOutput GetProofData(ProofKeyInput proofData)
 		{
-			if (proofData.AccessToken == null) {
+			if (proofData.AccessToken == null)
+			{
 				throw new ProofKeySigningException(nameof(proofData.AccessToken));
 			}
 
@@ -156,21 +158,46 @@ namespace Microsoft.Office.WopiValidator.Core
 		public static RSACryptoServiceProvider GetRSACryptoServiceProvider(string pathToCert)
 		{
 			var cert = new X509Certificate2(pathToCert);
-			var parameters = GetCspParamsFromCertificate(cert);
+			var parameters = GetCspParams(cert);
+			return new RSACryptoServiceProvider(parameters);
+		}
+
+		public static RSACryptoServiceProvider GetRSACryptoServiceProvider(string pathToPfx, string pathToPassword)
+		{
+			var parameters = GetCspParams(pathToPfx, pathToPassword);
 			return new RSACryptoServiceProvider(parameters);
 		}
 
 		public static RSACryptoServiceProvider DefaultCurrentKeyProvider()
 		{
 			return GetRSACryptoServiceProvider("keys/CurrentKey.cer");
+			return GetRSACryptoServiceProvider(@"C:\Users\tylerbu\code\wopi-validator-core\WopiProofKey_Current.pfx",
+				@"C:\Users\tylerbu\code\wopi-validator-core\WopiProofKey_Current.pfx_pwd.txt");
+
 		}
 
 		public static RSACryptoServiceProvider DefaultOldKeyProvider()
 		{
 			return GetRSACryptoServiceProvider("keys/OldKey.cer");
+			return GetRSACryptoServiceProvider(@"C:\Users\tylerbu\code\wopi-validator-core\WopiProofKey_Old.pfx",
+				@"C:\Users\tylerbu\code\wopi-validator-core\WopiProofKey_Old.pfx_pwd.txt");
 		}
 
-		private static CspParameters GetCspParamsFromCertificate(X509Certificate2 cert)
+		private static CspParameters GetCspParams(string pathToPfx, string pathToPassword)
+		{
+			var pfx = new X509Certificate2Collection();
+			var password = File.ReadAllText(pathToPassword).Trim();
+			pfx.Import(pathToPfx, password, X509KeyStorageFlags.PersistKeySet);
+			if (pfx.Count != 1)
+			{
+				throw new Exception($"PFX file contained {pfx.Count} certificates; expected 1");
+			}
+
+			var csp = GetCspParams(pfx[0]);
+			return csp;
+		}
+
+		private static CspParameters GetCspParams(X509Certificate2 cert)
 		{
 			if (cert == null)
 			{
