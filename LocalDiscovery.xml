@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <wopi-discovery>
-  <net-zone name="external-https">
-  </net-zone>
+  <net-zone
+    name="external-https" />
   <proof-key
-    value="BgIAAACkAABSU0ExAAQAAAEAAQBBuu8MAdiDsgrdOlqcs6hx57omHAP1aVqbY4IzbK74B/jbzwyhXtL11MdPL8FwpdoeKHgA2iFI3Aju0nl+bK+iKTkVgqm3pgY5bUgHNJahFpiggAKJHkbz4Nk1c9EGHF1miHD++Bq309Pbx+z8/hOV2d9KzR+ufea1EvW2r/895Q=="
-    modulus="5T3/r7b1ErXmfa4fzUrf2ZUT/vzsx9vT07ca+P5wiGZdHAbRczXZ4PNGHokCgKCYFqGWNAdIbTkGprepghU5KaKvbH550u4I3Egh2gB4KB7apXDBL0/H1PXSXqEMz9v4B/iubDOCY5taafUDHCa653Gos5xaOt0KsoPYAQzvukE="
+    value="BgIAAACkAABSU0ExAAQAAAEAAQC90sTLHI5IZofPCnlsoy228J7qyEVZo43sw1FlCuDlCqRTqXXwqsm9Fh2lLeMtuNuqpJuy8GoYILaUh4Qc9PH5FKwX32qiexHWqq6cHz/1wto6wG8v+6CA+oZK6ZOBRnsrcumWQAlQC3T1w1xXF2pValCi80xro1CCbG32FJKVyw=="
+    modulus="y5WSFPZtbIJQo2tM86JQalVqF1dcw/V0C1AJQJbpcit7RoGT6UqG+oCg+y9vwDrawvU/H5yuqtYRe6Jq3xesFPnx9ByEh5S2IBhq8LKbpKrbuC3jLaUdFr3JqvB1qVOkCuXgCmVRw+yNo1lFyOqe8LYto2x5Cs+HZkiOHMvE0r0="
     exponent="AQAB"
-    oldvalue="BgIAAACkAABSU0ExAAQAAAEAAQAxqkEnFoUiRpBI5DbWW+rDRtuEwSh4pEmGO+JEK/gWOyUKLpy8T9xGV6C2eUjLa4FeQ+FP9enRsp1am66zB3W4s12yVvpMvWkoJpU0vbcqzJKmbZZ2KUdiQEqtJmMysHgjo7Pz8V2jmKhJSCyfDC3nrhZS4J8EHmkfy3bGIdYKpg=="
-    oldmodulus="pgrWIcZ2yx9pHgSf4FIWructDJ8sSEmomKNd8fOzoyN4sDJjJq1KQGJHKXaWbaaSzCq3vTSVJihpvUz6VrJds7h1B7Oum1qdstHp9U/hQ16Ba8tIebagV0bcT7ycLgolOxb4K0TiO4ZJpHgowYTbRsPqW9Y25EiQRiKFFidBqjE="
+    oldvalue="BgIAAACkAABSU0ExAAQAAAEAAQAxSSgz9Ws20GMUP7IISwpFAQTUPtN1JdcTCMiIVsrqtOlT3m5GabbUtFhgBld7K5H5/XPnyGN/FZQ2MUxaQEGRX1cHPJXnGHFLH1kyj0T3fyGwdkdjU0OZbQ6zVULFNCO3gcuR5H5lF3v822ovrgm3cK4PqYU8GfWbQ/W0jbqI2Q=="
+    oldmodulus="2Yi6jbT1Q5v1GTyFqQ+ucLcJri9q2/x7F2V+5JHLgbcjNMVCVbMObZlDU2NHdrAhf/dEjzJZH0txGOeVPAdXX5FBQFpMMTaUFX9jyOdz/fmRK3tXBmBYtNS2aUZu3lPptOrKVojICBPXJXXTPtQEAUUKSwiyPxRj0DZr9TMoSTE="
     oldexponent="AQAB" />
 </wopi-discovery>

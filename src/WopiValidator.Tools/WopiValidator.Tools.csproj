@@ -10,15 +10,6 @@
     <ProjectReference Include="..\WopiValidator.Core\WopiValidator.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="..\..\ProofKeysNew.cer" Link="ProofKeysNew.cer">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\ProofKeysOld.cer" Link="ProofKeysOld.cer">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' != 'netcoreapp2.0' ">
     <Reference Include="System" />
     <Reference Include="System.Collections.Concurrent" />
@@ -29,6 +20,31 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="keys\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\WopiValidator\keys\CurrentKey.cer" Link="keys\CurrentKey.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\WopiValidator\keys\CurrentKey.pfx" Link="keys\CurrentKey.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\WopiValidator\keys\CurrentKey.pvk" Link="keys\CurrentKey.pvk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\WopiValidator\keys\OldKey.cer" Link="keys\OldKey.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\WopiValidator\keys\OldKey.pfx" Link="keys\OldKey.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\WopiValidator\keys\OldKey.pvk" Link="keys\OldKey.pvk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

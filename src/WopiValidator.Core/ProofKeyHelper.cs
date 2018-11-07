@@ -162,12 +162,12 @@ namespace Microsoft.Office.WopiValidator.Core
 
 		public static RSACryptoServiceProvider DefaultCurrentKeyProvider()
 		{
-			return GetRSACryptoServiceProvider("ProofKeysNew.cer");
+			return GetRSACryptoServiceProvider("keys/CurrentKey.cer");
 		}
 
 		public static RSACryptoServiceProvider DefaultOldKeyProvider()
 		{
-			return GetRSACryptoServiceProvider("ProofKeysOld.cer");
+			return GetRSACryptoServiceProvider("keys/OldKey.cer");
 		}
 
 		private static CspParameters GetCspParamsFromCertificate(X509Certificate2 cert)

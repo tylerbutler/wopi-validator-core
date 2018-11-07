@@ -116,6 +116,15 @@ Copyright (C) 2018 Microsoft
   --version               Display version information.
 ```
 
+## Proof key tests
+
+
+makecert.exe -n "CN=WopiValidatorRoot,O=CurrentKey" -r -pe -a sha512 -len 4096 -cy authority -sv CurrentKey.pvk CurrentKey.cer
+pvk2pfx.exe -pvk CurrentKey.pvk -spc CurrentKey.cer -pfx CurrentKey.pfx
+
+makecert.exe -n "CN=WopiValidatorRoot,O=OldKey" -r -pe -a sha512 -len 4096 -cy authority -sv OldKey.pvk OldKey.cer
+pvk2pfx.exe -pvk OldKey.pvk -spc OldKey.cer -pfx OldKey.pfx
+
 ## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a
