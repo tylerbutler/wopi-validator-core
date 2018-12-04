@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Office.WopiValidator.Core
 {
