@@ -434,7 +434,7 @@
               <JsonSchemaValidator Schema="CheckFileInfoSchema" />
               <JsonResponseContentValidator>
                 <!-- FileExtension, if provided, should start with a "."; using this as a shortcut to test for that. -->
-                <StringProperty Name="FileExtension" ExpectedValue=".wopitest" IsRequired="false" />
+                <StringProperty Name="FileExtension" ExpectedValue=".wopitest" IsRequired="false" ValidationFailedMessage="FileExtension must start with a '.'" />
               </JsonResponseContentValidator>
             </Validators>
           </CheckFileInfo>
@@ -1330,7 +1330,7 @@
             </SaveState>
             <Validators>
               <JsonResponseContentValidator>
-                <AbsoluteUrlProperty Name="HostEditUrl" IsRequired="true" />
+                <AbsoluteUrlProperty Name="HostEditUrl" IsRequired="true" ValidationFailedMessage="This property *must* be included in the reponse for Office Online." />
                 <AbsoluteUrlProperty Name="HostViewUrl" IsRequired="true" />
               </JsonResponseContentValidator>
             </Validators>

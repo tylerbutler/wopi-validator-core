@@ -83,10 +83,13 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 		public abstract class JsonPropertyValidator : IJsonPropertyValidator
 		{
-			protected JsonPropertyValidator(string key, bool isRequired)
+			private readonly string _validationFailureMessage;
+
+			protected JsonPropertyValidator(string key, bool isRequired, string validationFailedMessage)
 			{
 				Key = key;
 				IsRequired = isRequired;
+				ValidationFailedMessage = validationFailedMessage;
 			}
 
 			protected bool IsActualValueNullOrEmpty(JToken actualValue)
@@ -97,6 +100,13 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 						(actualValue.Type == JTokenType.String && string.IsNullOrEmpty(actualValue.Value<string>())) ||
 						(actualValue.Type == JTokenType.Null);
 			}
+
+			protected string GetErrorMessage(string message)
+			{
+				return !string.IsNullOrEmpty(ValidationFailedMessage) ? ValidationFailedMessage : message;
+			}
+
+			protected string ValidationFailedMessage { get; private set; }
 
 			public string Key { get; private set; }
 
@@ -111,8 +121,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 			public string ExpectedStateKey { get; private set; }
 			private readonly bool _mustIncludeAccessToken = false;
 
-			public JsonAbsoluteUrlPropertyValidator(string key, bool isRequired, bool mustIncludeAccessToken, string expectedStateKey)
-				: base(key, isRequired)
+			public JsonAbsoluteUrlPropertyValidator(string key, bool isRequired, bool mustIncludeAccessToken, string expectedStateKey, string validationFailedMessage = null)
+				: base(key, isRequired, validationFailedMessage)
 			{
 				ExpectedStateKey = expectedStateKey;
 				_mustIncludeAccessToken = mustIncludeAccessToken;
@@ -120,13 +130,13 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 			public override bool Validate(JToken actualValue, Dictionary<string, string> savedState, out string errorMessage)
 			{
-				errorMessage = null;
+				errorMessage = ValidationFailedMessage;
 
 				if (IsActualValueNullOrEmpty(actualValue))
 				{
 					if (IsRequired)
 					{
-						errorMessage = string.Format("Value is required but not provided.");
+						errorMessage = GetErrorMessage("Value is required but not provided.");
 						return false;
 					}
 
@@ -141,7 +151,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 					{
 						if (_mustIncludeAccessToken && IncludesAccessToken(value))
 						{
-							errorMessage = $"URL '{value}' does not include the 'access_token' query parameter";
+							errorMessage = GetErrorMessage($"URL '{value}' does not include the 'access_token' query parameter");
 							return false;
 						}
 
@@ -149,7 +159,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 					}
 					else
 					{
-						errorMessage = string.Format("Cannot parse {0} as absolute URL", value);
+						errorMessage = GetErrorMessage($"Cannot parse {value} as absolute URL");
 						return false;
 					}
 				}
@@ -167,8 +177,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 		public abstract class JsonPropertyEqualityValidator<T> : JsonPropertyValidator
 			where T : IEquatable<T>
 		{
-			protected JsonPropertyEqualityValidator(string key, bool isRequired, T expectedValue, bool hasExpectedValue, string expectedStateKey)
-				: base(key, isRequired)
+			protected JsonPropertyEqualityValidator(string key, bool isRequired, T expectedValue, bool hasExpectedValue, string expectedStateKey, string validationFailedMessage=null)
+				: base(key, isRequired, validationFailedMessage)
 			{
 				DefaultExpectedValue = expectedValue;
 				HasExpectedValue = hasExpectedValue;
@@ -181,7 +191,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 				{
 					if (IsRequired)
 					{
-						errorMessage = string.Format(CultureInfo.CurrentCulture, "Required property missing");
+						errorMessage = GetErrorMessage("Required property missing");
 						return false;
 					}
 					else
@@ -207,7 +217,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 					{
 						if (!HasExpectedValue)
 						{
-							errorMessage = string.Format(CultureInfo.CurrentCulture, "ExpectedStateValue should be of type : {0}", typeof(T).FullName);
+							errorMessage = GetErrorMessage($"ExpectedStateValue should be of type : {typeof(T).FullName}");
 							return false;
 						}
 					}
@@ -239,7 +249,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 					isValid = false;
 				}
 
-				errorMessage = string.Format(CultureInfo.CurrentCulture, "Expected: '{0}', Actual: '{1}'", FormattedExpectedValue, formattedActualValue);
+				errorMessage = GetErrorMessage($"Expected: '{FormattedExpectedValue}', Actual: '{formattedActualValue}'");
 				return isValid;
 			}
 
@@ -256,8 +266,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 		public class JsonIntegerPropertyValidator : JsonPropertyEqualityValidator<int>
 		{
-			public JsonIntegerPropertyValidator(string key, bool isRequired, int expectedValue, bool hasExpectedValue, string expectedStateKey)
-				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey)
+			public JsonIntegerPropertyValidator(string key, bool isRequired, int expectedValue, bool hasExpectedValue, string expectedStateKey, string validationFailedMessage = null)
+				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey, validationFailedMessage)
 			{
 			}
 
@@ -269,8 +279,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 		public class JsonLongPropertyValidator : JsonPropertyEqualityValidator<long>
 		{
-			public JsonLongPropertyValidator(string key, bool isRequired, long expectedValue, bool hasExpectedValue, string expectedStateKey)
-				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey)
+			public JsonLongPropertyValidator(string key, bool isRequired, long expectedValue, bool hasExpectedValue, string expectedStateKey, string validationFailedMessage = null)
+				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey, validationFailedMessage)
 			{
 			}
 
@@ -282,8 +292,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 		public class JsonBooleanPropertyValidator : JsonPropertyEqualityValidator<bool>
 		{
-			public JsonBooleanPropertyValidator(string key, bool isRequired, bool expectedValue, bool hasExpectedValue, string expectedStateKey)
-				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey)
+			public JsonBooleanPropertyValidator(string key, bool isRequired, bool expectedValue, bool hasExpectedValue, string expectedStateKey, string validationFailedMessage = null)
+				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey, validationFailedMessage)
 			{
 			}
 
@@ -297,8 +307,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 		{
 			private readonly string _endsWithValue;
 
-			public JsonStringPropertyValidator(string key, bool isRequired, string expectedValue, bool hasExpectedValue, string endsWithValue, string expectedStateKey)
-				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey)
+			public JsonStringPropertyValidator(string key, bool isRequired, string expectedValue, bool hasExpectedValue, string endsWithValue, string expectedStateKey, string validationFailedMessage = null)
+				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey, validationFailedMessage)
 			{
 				_endsWithValue = endsWithValue;
 			}
@@ -322,7 +332,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 				if (!formattedActualValue.EndsWith(_endsWithValue))
 				{
-					errorMessage = string.Format("Expected to end with: '{0}', Actual: '{1}'", _endsWithValue, formattedActualValue);
+					errorMessage = GetErrorMessage($"Expected to end with: '{_endsWithValue}', Actual: '{formattedActualValue}'");
 					return false;
 				}
 
@@ -335,8 +345,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 			private readonly Regex _regex;
 			private readonly bool _shouldMatch;
 
-			public JsonStringRegexPropertyValidator(string key, bool isRequired, string expectedValue, bool hasExpectedValue, string expectedStateKey, bool shouldMatch)
-				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey)
+			public JsonStringRegexPropertyValidator(string key, bool isRequired, string expectedValue, bool hasExpectedValue, string expectedStateKey, bool shouldMatch, string validationFailedMessage = null)
+				: base(key, isRequired, expectedValue, hasExpectedValue, expectedStateKey, validationFailedMessage)
 			{
 				_regex = new Regex(expectedValue, RegexOptions.Compiled);
 				_shouldMatch = shouldMatch;
@@ -354,7 +364,6 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 				if (actualValue == null && !IsRequired)
 					return true;
 
-				errorMessage = "";
 				string typedActualValue = actualValue.Value<string>();
 				string formattedActualValue = FormatValue(typedActualValue);
 
@@ -366,17 +375,18 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 					{
 						return true;
 					}
-					errorMessage = string.Format("Value '{0}' doesn't match the expected regular expression '{1}'", formattedActualValue, _regex);
+					errorMessage = GetErrorMessage($"Value '{formattedActualValue}' doesn't match the expected regular expression '{_regex}'");
 					return false;
 				}
 				else // _isMatchShouldBe == false
 				{
 					if (!isMatch)
 					{
+						errorMessage = "";
 						return true;
 					}
 
-					errorMessage = string.Format("Value '{0}' matched the regular expression, but should not '{1}'", formattedActualValue, _regex);
+					errorMessage = GetErrorMessage($"Value '{formattedActualValue}' matched the regular expression, but should not '{_regex}'");
 					return false;
 				}
 			}
@@ -384,8 +394,8 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 
 		public class JsonArrayPropertyValidator : JsonPropertyEqualityValidator<string>
 		{
-			public JsonArrayPropertyValidator(string key, bool isRequired, string containsValue, bool hasContainsValue, string expectedStateKey)
-				: base(key, isRequired, containsValue, hasContainsValue, expectedStateKey)
+			public JsonArrayPropertyValidator(string key, bool isRequired, string containsValue, bool hasContainsValue, string expectedStateKey, string validationFailedMessage = null)
+				: base(key, isRequired, containsValue, hasContainsValue, expectedStateKey, validationFailedMessage)
 			{
 			}
 
@@ -407,7 +417,7 @@ namespace Microsoft.Office.WopiValidator.Core.Validators
 					isValid = false;
 				}
 
-				errorMessage = string.Format(CultureInfo.CurrentCulture, "Expected: '{0}', Actual: '{1}'", FormattedExpectedValue, formattedActualValue);
+				errorMessage = GetErrorMessage($"Expected: '{FormattedExpectedValue}', Actual: '{formattedActualValue}'");
 				return isValid;
 			}
 

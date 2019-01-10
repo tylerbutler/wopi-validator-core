@@ -7,7 +7,11 @@
   </xs:complexType>
 
   <xs:complexType name="ValidatorBaseType">
-    <xs:attribute name="ValidationMessage" type="xs:string" use="optional"/>
+    <xs:attribute name="ValidationFailedMessage" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="JsonResponsePropertyBaseType">
+    <xs:attribute name="ValidationFailedMessage" type="xs:string" use="optional"/>
   </xs:complexType>
 
   <xs:group name="ValidatorsGroup">
@@ -21,60 +25,88 @@
                   <xs:choice maxOccurs="unbounded">
                     <xs:element name="BooleanProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="ExpectedValue" type="xs:boolean" use="optional" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="ExpectedValue" type="xs:boolean" use="optional" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="IntegerProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="ExpectedValue" type="xs:int" use="optional" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="ExpectedValue" type="xs:int" use="optional" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="LongProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="ExpectedValue" type="xs:long" use="optional" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="ExpectedValue" type="xs:long" use="optional" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="StringProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="EndsWith" type="xs:string" use="optional" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="ExpectedValue" type="xs:string" use="optional" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="EndsWith" type="xs:string" use="optional" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="ExpectedValue" type="xs:string" use="optional" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="StringRegexProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="ShouldMatch" type="xs:boolean" use="optional" default="true" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="ExpectedValue" type="xs:string" use="required" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="ShouldMatch" type="xs:boolean" use="optional" default="true" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="ExpectedValue" type="xs:string" use="required" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="AbsoluteUrlProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
-                        <xs:attribute name="MustIncludeAccessToken" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                            <xs:attribute name="MustIncludeAccessToken" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="ArrayProperty">
                       <xs:complexType>
-                        <xs:attribute name="Name" type="xs:string" use="required" />
-                        <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
-                        <xs:attribute name="ContainsValue" type="xs:string" use="optional" />
-                        <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                        <xs:complexContent>
+                          <xs:extension base="JsonResponsePropertyBaseType">
+                            <xs:attribute name="Name" type="xs:string" use="required" />
+                            <xs:attribute name="ExpectedStateKey" type="xs:string" use="optional" />
+                            <xs:attribute name="ContainsValue" type="xs:string" use="optional" />
+                            <xs:attribute name="IsRequired" type="xs:boolean" use="optional" default="false" />
+                          </xs:extension>
+                        </xs:complexContent>
                       </xs:complexType>
                     </xs:element>
                   </xs:choice>
