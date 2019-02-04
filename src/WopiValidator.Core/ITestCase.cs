@@ -5,13 +5,6 @@ using System.Collections.Generic;
 
 namespace Microsoft.Office.WopiValidator.Core
 {
-	public enum TestCaseType
-	{
-		Unspecified = 0,
-		Default = 1,
-		Prerequisite = 2
-	}
-
 	public interface ITestCase
 	{
 		string Name { get; }
