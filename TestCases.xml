@@ -428,6 +428,10 @@
         <Description>
           This tests that hosts' CheckFileInfo responses conform to the JSON schema.
         </Description>
+        <Tags>
+          <Tag>core</Tag>
+          <Tag>checkfileinfo</Tag>
+        </Tags>
         <Requests>
           <CheckFileInfo>
             <Validators>
@@ -444,6 +448,10 @@
         <Description>
           This tests that the Host* URLs provided by the host are not Office Online action URLs.
         </Description>
+        <Tags>
+          <Tag>officeonline</Tag>
+          <Tag>checkfileinfo</Tag>
+        </Tags>
         <Requests>
           <CheckFileInfo>
             <Validators>
@@ -479,6 +487,10 @@
         <Description>
           Tests that the WOPI host is capable of handling WOPI Lock IDs of 256 characters.
         </Description>
+        <Tags>
+          <Tag>core</Tag>
+          <Tag>locks</Tag>
+        </Tags>
         <Requests>
           <Lock Lock="1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456" />
           <Unlock Lock="1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456" />

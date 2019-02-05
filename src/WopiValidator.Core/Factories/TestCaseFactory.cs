@@ -62,6 +62,8 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 			bool uploadDocumentOnSetup = (bool?)definition.Attribute("UploadDocumentOnSetup") ?? true;
 			bool deleteDocumentOnTeardown = (bool?)definition.Attribute("DeleteDocumentOnTeardown") ?? true;
 
+			IEnumerable<string> tags = (definition.Element("Tags") ?? new XElement("Tags")).Elements("Tag").Cast<string>();
+
 			XElement requestsDefinition = definition.Element("Requests");
 			IEnumerable<IRequest> requests = RequestFactory.GetRequests(requestsDefinition);
 
@@ -75,6 +77,7 @@ namespace Microsoft.Office.WopiValidator.Core.Factories
 				cleanupRequests,
 				name,
 				CondenseMultiLineString(description),
+				tags,
 				uploadDocumentOnSetup,
 				deleteDocumentOnTeardown,
 				category);

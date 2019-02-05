@@ -18,6 +18,7 @@ namespace Microsoft.Office.WopiValidator.Core
 			IEnumerable<IRequest> cleanupRequests,
 			string name,
 			string description,
+			IEnumerable<string> tags,
 			bool uploadDocumentOnSetup,
 			bool deleteDocumentOnTearDown,
 			string category)
@@ -34,6 +35,9 @@ namespace Microsoft.Office.WopiValidator.Core
 			if (cleanupRequests == null)
 				cleanupRequests = Enumerable.Empty<IRequest>();
 			CleanupRequests = cleanupRequests.ToArray();
+
+			if (tags == null)
+				Tags = Enumerable.Empty<string>().ToArray();
 
 			if (string.IsNullOrEmpty(resourceId))
 				throw new ArgumentException("ResourceId cannot be empty.", "resourceId");
@@ -52,6 +56,7 @@ namespace Microsoft.Office.WopiValidator.Core
 
 		public IEnumerable<IRequest> Requests { get; private set; }
 		public IEnumerable<IRequest> CleanupRequests { get; private set; }
+		public IEnumerable<string> Tags { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
 		public string ResourceId { get; private set; }
