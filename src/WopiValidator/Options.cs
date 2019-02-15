@@ -9,7 +9,7 @@ namespace Microsoft.Office.WopiValidator
 	/// <summary>
 	/// Represents set of command line arguments that can be used to modify behavior of the application.
 	/// </summary>
-	class Options
+	internal class Options : IFilterOptions
 	{
 		[Option('w', "wopisrc", Required = true, HelpText = "WopiSrc URL for a wopitest file")]
 		public string WopiEndpoint { get; set; }
@@ -34,5 +34,10 @@ namespace Microsoft.Office.WopiValidator
 
 		[Option('s', "ignore-skipped", Required = false, HelpText = "Don't output any info about skipped tests.")]
 		public bool IgnoreSkipped { get; set; }
+
+		TestCategory? IFilterOptions.TestCategory
+		{
+			get { return TestCategory; }
+		}
 	}
 }

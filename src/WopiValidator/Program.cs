@@ -63,25 +63,11 @@ namespace Microsoft.Office.WopiValidator
 		private static ExitCode Execute(Options options)
 		{
 			// get run configuration from XML
-			IEnumerable<TestExecutionData> testData = ConfigParser.ParseExecutionData(options.RunConfigurationFilePath, options.TestCategory);
-
-			if (!String.IsNullOrEmpty(options.TestGroup))
-			{
-				testData = testData.Where(d => d.TestGroupName == options.TestGroup);
-			}
-
-			IEnumerable<TestExecutionData> executionData;
-			if (!String.IsNullOrWhiteSpace(options.TestName))
-			{
-				executionData = new TestExecutionData[] { TestExecutionData.GetDataForSpecificTest(testData, options.TestName) };
-			}
-			else
-			{
-				executionData = testData;
-			}
+			IEnumerable<TestExecutionData> alltests = ConfigParser.ParseExecutionData(options.RunConfigurationFilePath);
+			IEnumerable<TestExecutionData> testsToRun = alltests.ApplyFilters(options);
 
 			// Create executor groups
-			var executorGroups = executionData.GroupBy(d => d.TestGroupName)
+			var testGroups = testsToRun.GroupBy(d => d.TestGroupName)
 				.Select(g => new
 				{
 					Name = g.Key,
@@ -90,7 +76,7 @@ namespace Microsoft.Office.WopiValidator
 
 			ConsoleColor baseColor = ConsoleColor.White;
 			HashSet<ResultStatus> resultStatuses = new HashSet<ResultStatus>();
-			foreach (var group in executorGroups)
+			foreach (var group in testGroups)
 			{
 				WriteToConsole($"\nTest group: {group.Name}\n", ConsoleColor.White);
 
