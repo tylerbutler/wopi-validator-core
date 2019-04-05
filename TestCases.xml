@@ -1623,6 +1623,8 @@
               <JsonResponseContentValidator>
                 <AbsoluteUrlProperty Name="HostEditUrl" IsRequired="true" />
                 <AbsoluteUrlProperty Name="HostViewUrl" IsRequired="true" />
+                <StringRegexProperty Name="HostEditUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
+                <StringRegexProperty Name="HostViewUrl" ExpectedValue="^https:\/\/.*?\.officeapps(-df)?\.live\.com.+" IsRequired="false" ShouldMatch="false" />
               </JsonResponseContentValidator>
             </Validators>
           </PutRelativeFile>
